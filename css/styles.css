@@ -629,3 +629,60 @@ footer {
     height: 95% !important;
   }
 }
+/* Hero banner tweaks for small screens */
+@media (max-width: 600px) {
+  /* Let the banner grow/shrink to its content */
+  #banner {
+    height: auto;
+  }
+
+  /* Limit the photo’s height and focus on the top */
+  .banner-photo {
+    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Stack overlay contents vertically */
+  .banner-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    background: rgba(0,0,0,0.25); /* optional darken so text pops */
+  }
+
+  /* Make hero-text flow naturally */
+  .hero-text {
+    position: relative;
+    transform: none;
+    bottom: auto;
+    left: auto;
+    margin: 1rem 0;
+    background: rgba(254,253,252,0.9);
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: left;
+  }
+  .hero-text h1 {
+    font-size: 1.8em;
+  }
+  .subtitle {
+    font-size: 1em;
+  }
+  .tagline {
+    font-size: 0.9em;
+  }
+
+  /* Push nav below the hero text and allow wrapping */
+  #main-nav {
+    position: static;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    background: rgba(254,253,252,0.9);
+  }
+  #main-nav a {
+    margin: 0.3rem 0.6rem;
+  }
+}

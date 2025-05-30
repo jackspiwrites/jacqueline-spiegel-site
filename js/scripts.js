@@ -1,7 +1,12 @@
+// js/scripts.js
 console.log("🔧 scripts.js loaded");
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1) All your PDF filenames in assets/pdfs/ ---
+  // --- 1) Tell PDF.js where its worker lives ---
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.worker.min.js";
+
+  // --- 2) All your PDF filenames in assets/pdfs/ ---
   const pdfFiles = [
     "ACE24005 c3 AZ GOTV 1 FINAL FPO.pdf",
     "ACE24007 c4 MI GOTV 1 FINAL FPO.pdf",
@@ -68,70 +73,101 @@ document.addEventListener("DOMContentLoaded", () => {
     "YOT24020 Retention 6 FINAL FPO.pdf"
   ];
 
-  // --- 2) Prefix → Section Title map ---
+  // --- 3) Prefix → Section Title map ---
   const campaigns = {
-    YOT:    "Yes On Two",
-    VOTO:   "Voto Latino",
-    UNI:    "In Union Newsletter",
-    UFD:    "United For Democracy",
-    PPAC:   "Personal PAC",
-    REPEAL: "Repeal Measure 435",
-    NSEA:   "Repeal Measure 435",
-    NGS:    "Black Men Vote",
-    NCFF:   "North Carolina Families First",
-    NAACP:  "NAACP Nebraska Voter Guide",
-    LCVN:   "LCV GOTV",
-    ACE:    "Climate Emergency Advocates",
-    ALL:    "Alliance for Youth Action",
-    AYA:    "Alliance for Youth Action"
+    YOT:   "Yes On Two",
+    VOTO:  "Voto Latino",
+    UNI:   "In Union Newsletter",
+    UFD:   "United For Democracy",
+    PPAC:  "Personal PAC",
+    REPEAL:"Repeal Measure 435",
+    NSEA:  "Repeal Measure 435",
+    NGS:   "Black Men Vote",
+    NCFF:  "North Carolina Families First",
+    NAACP: "NAACP Nebraska Voter Guide",
+    LCVN:  "LCV GOTV",
+    ACE:   "Climate Emergency Advocates",
+    ALL:   "Alliance for Youth Action",
+    AYA:   "Alliance for Youth Action"
   };
 
-  // --- 3) Group by prefix ---
+  // --- 4) Group by prefix ---
   const grouped = {};
   pdfFiles.forEach(fn => {
-    const pre = (fn.match(/^[A-Z]+/)||["Other"])[0];
-    const sec = campaigns[pre] || "Other";
-    (grouped[sec] = grouped[sec]||[]).push(fn);
+    const pre     = (fn.match(/^[A-Z]+/) || ["Other"])[0];
+    const section = campaigns[pre] || "Other";
+    (grouped[section] = grouped[section] || []).push(fn);
   });
 
-  // --- 4) Render each section + grid ---
+  // --- 5) Render each section + grid with placeholders ---
   const container = document.getElementById("dynamic-portfolio");
   Object.entries(grouped).forEach(([section, files]) => {
     const secEl = document.createElement("section");
-    secEl.innerHTML = `<h3>${section}</h3><div class="portfolio-grid"></div>`;
+    secEl.innerHTML = `
+      <h3>${section}</h3>
+      <div class="portfolio-grid"></div>
+    `;
     const grid = secEl.querySelector(".portfolio-grid");
 
     files.forEach(fn => {
-      const url = `assets/pdfs/${encodeURIComponent(fn)}`;
-      const card = document.createElement("div");
+      const pdfUrl   = `assets/pdfs/${encodeURIComponent(fn)}`;
+      const card     = document.createElement("div");
       card.className = "pdf-card hidden";
-      card.dataset.pdf = url;
+
       card.innerHTML = `
-  <object
-    data="${url}#view=FitH"
-    type="application/pdf"
-    width="100%"
-    height="200px"
-  >
-    <p style="padding:1rem; text-align:center;">
-      Can’t preview this PDF here—<a href="${url}" target="_blank" rel="noopener">
-        download it instead
-      </a>.
-    </p>
-  </object>
-`;
+        <div class="pdf-thumb-placeholder" style="
+          width:100%; height:200px; background:#eee;
+          display:flex; align-items:center; justify-content:center;
+          font-size:0.8em; color:#666;">
+          Loading preview…
+        </div>
+        <div class="pdf-label" style="
+          text-align:center; padding:0.5em; font-size:0.9em;
+          background:#fff;">
+          ${fn}
+        </div>
+      `;
+
       grid.appendChild(card);
+
+      // Render first page via PDF.js
+      const placeholder = card.querySelector(".pdf-thumb-placeholder");
+      pdfjsLib.getDocument(pdfUrl).promise
+        .then(pdf => pdf.getPage(1))
+        .then(page => {
+          const vp     = page.getViewport({ scale: 1 });
+          const scale  = 200 / vp.height;
+          const svp    = page.getViewport({ scale });
+          const canvas = document.createElement("canvas");
+          const ctx    = canvas.getContext("2d");
+
+          canvas.width  = svp.width;
+          canvas.height = svp.height;
+
+          return page.render({ canvasContext: ctx, viewport: svp }).promise
+            .then(() => {
+              const link = document.createElement("a");
+              link.href   = pdfUrl;
+              link.target = "_blank";
+              link.rel    = "noopener";
+              link.appendChild(canvas);
+              card.replaceChild(link, placeholder);
+            });
+        })
+        .catch(err => {
+          console.warn("PDF.js render failed for", fn, err);
+        });
     });
 
     container.appendChild(secEl);
   });
 
-  // --- 5) Scroll‐reveal observer ---
-  const obs = new IntersectionObserver((ents, o) => {
-    ents.forEach(e => {
+  // --- 6) Scroll‐reveal observer ---
+  const obs = new IntersectionObserver((entries, observer) => {
+    entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.classList.add("visible");
-        o.unobserve(e.target);
+        observer.unobserve(e.target);
       }
     });
   }, {
@@ -140,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   document.querySelectorAll(".pdf-card").forEach(c => obs.observe(c));
 
-  // --- 6) Lightbox logic ---
+  // --- 7) Lightbox logic ---
   const modal    = document.getElementById("pdf-modal");
   const embedEl  = document.getElementById("pdf-embed");
   const closeBtn = document.getElementById("pdf-close");
@@ -149,10 +185,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", e => {
     const card = e.target.closest(".pdf-card");
     if (!card) return;
-    embedEl.src = card.dataset.pdf;
+    embedEl.src = card.querySelector("a").href;
     modal.classList.remove("hidden");
   });
-
   closeBtn.addEventListener("click", () => {
     embedEl.src = "";
     modal.classList.add("hidden");
