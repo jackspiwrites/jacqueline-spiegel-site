@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- PDF.js library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Portfolio | Jacqueline Spiegel</title>
   <link rel="stylesheet" href="css/styles.css"/>
+
+  <!-- PDF.js library, deferred -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"
+    defer
+  ></script>
+  <!-- Your portfolio script, deferred -->
+  <script src="js/scripts.js" defer></script>
 </head>
 <body>
 
@@ -42,7 +48,5 @@
     <p>&copy; 2025 Jacqueline Spiegel</p>
   </footer>
 
-  <!-- Your portfolio script, which will render the PDF.js thumbnails -->
-  <script src="js/scripts.js" defer></script>
 </body>
 </html>
