@@ -593,3 +593,39 @@ footer {
 #contact-form button:hover {
   background: var(--accent);
 }
+/*--------------------------------------
+  Mobile tweaks (≤768px)
+--------------------------------------*/
+@media (max-width: 768px) {
+  /* Stack hero / highlights */
+  .highlights-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .headshot-wrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Allow nav links to wrap */
+  #main-nav,
+  nav:not(#main-nav) {
+    flex-wrap: wrap;
+  }
+
+  /* One-column portfolio */
+  .portfolio-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Smaller PDF thumbnails */
+  .pdf-card object,
+  .pdf-card iframe {
+    height: 150px !important;
+  }
+
+  /* Full-screen modal on mobile */
+  #pdf-modal .modal-content {
+    width: 95% !important;
+    height: 95% !important;
+  }
+}

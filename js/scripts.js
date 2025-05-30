@@ -106,7 +106,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("div");
       card.className = "pdf-card hidden";
       card.dataset.pdf = url;
-      card.innerHTML = `<embed src="${url}#page=1&view=FitH" type="application/pdf"/>`;
+      card.innerHTML = `
+  <object
+    data="${url}#view=FitH"
+    type="application/pdf"
+    width="100%"
+    height="200px"
+  >
+    <p style="padding:1rem; text-align:center;">
+      Can’t preview this PDF here—<a href="${url}" target="_blank" rel="noopener">
+        download it instead
+      </a>.
+    </p>
+  </object>
+`;
       grid.appendChild(card);
     });
 
