@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio | Jacqueline Spiegel</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+
+  <!-- Banner & Bottom Nav -->
+  <header id="banner">
+    <img src="assets/images/banner.jpg" alt="Scenic banner" class="banner-photo"/>
+    <div class="banner-overlay">
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html" class="active">Portfolio</a>
+        <a href="travels.html">Travels</a>
+         <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h2 style="text-align:center; margin-top:1rem;">Portfolio</h2>
+    <div id="dynamic-portfolio"></div>
+  </main>
+
+  <!-- PDF Viewer Modal -->
+  <div id="pdf-modal" class="hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <span id="pdf-close">×</span>
+      <embed id="pdf-embed" src="" type="application/pdf"/>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Jacqueline Spiegel</p>
+  </footer>
+
+  <script src="js/scripts.js"></script>
+</body>
+</html>
