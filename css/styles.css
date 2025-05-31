@@ -579,16 +579,16 @@ footer {
     text-align: center;
   }
 
-  /* Adjust banner layout */
+  /* Taller banner and slight zoom */
   #banner {
-    height: auto;
-    overflow: visible;
+    height: 360px;
   }
   .banner-photo {
     width: 100%;
-    max-height: 200px;
+    height: 100%;
     object-fit: cover;
     object-position: center top;
+    transform: scale(1.1);
   }
   .hero-text h1 { font-size: 1.8em; }
   .subtitle     { font-size: 1em;   }
@@ -616,23 +616,21 @@ footer {
   Mobile banner & nav fixes (≤600px)
 --------------------------------------*/
 @media (max-width: 600px) {
-  /* Allow banner to auto-size */
   #banner {
-    height: auto;
-    overflow: visible;
+    height: 420px;
   }
-
-  /* Shrink photo, keep top in view */
   .banner-photo {
-    width: 100%;
-    max-height: 180px;
-    object-fit: cover;
-    object-position: center top;
+    transform: scale(1.2);
   }
 
   .hero-text h1 { font-size: 1.8em; }
   .subtitle     { font-size: 1em;   }
   .tagline      { font-size: 0.9em; }
+
+  #main-nav,
+  nav:not(#main-nav) {
+    flex-wrap: wrap;
+  }
 }
 
 #image-modal {
