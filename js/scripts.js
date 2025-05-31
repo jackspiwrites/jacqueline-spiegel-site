@@ -2,11 +2,7 @@
 console.log("🔧 scripts.js loaded");
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1) Tell PDF.js where its worker lives ---
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.worker.min.js";
-
-  // --- 2) All your PDF filenames in assets/pdfs/ ---
+  // --- 1) All your PDF filenames in assets/pdfs/ ---
   const pdfFiles = [
     "ACE24005 c3 AZ GOTV 1 FINAL FPO.pdf",
     "ACE24007 c4 MI GOTV 1 FINAL FPO.pdf",
@@ -110,62 +106,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const grid = secEl.querySelector(".portfolio-grid");
 
     files.forEach(fn => {
-      const pdfUrl = `assets/pdfs/${encodeURIComponent(fn)}`;
-      const card   = document.createElement("div");
-      card.className = "pdf-card hidden";
+      const pdfUrl   = `assets/pdfs/${encodeURIComponent(fn)}`;
+      const thumbUrl = `assets/thumbs/${encodeURIComponent(fn.replace(/\\.pdf$/i, '.png'))}`;
+      const card     = document.createElement('div');
+      card.className = 'pdf-card hidden';
 
       card.innerHTML = `
-        <div class="pdf-thumb-placeholder" style="
-          width:100%; height:200px; background:#eee;
-          display:flex; align-items:center; justify-content:center;
-          font-size:0.8em; color:#666;">
-          Loading preview…
-        </div>
-        <div class="pdf-label" style="
-          text-align:center; padding:0.5em; font-size:0.9em;
-          background:#fff;">
-          ${fn}
-        </div>
+        <a href="${pdfUrl}" class="pdf-link" target="_blank" rel="noopener">
+          <img src="${thumbUrl}" alt="${fn}" class="pdf-thumb" />
+        </a>
+        <div class="pdf-label">${fn}</div>
       `;
 
       grid.appendChild(card);
-
-      // Render first page via PDF.js with Hi-DPI canvas
-      const placeholder = card.querySelector(".pdf-thumb-placeholder");
-      pdfjsLib.getDocument(pdfUrl).promise
-        .then(pdf => pdf.getPage(1))
-        .then(page => {
-          const vp    = page.getViewport({ scale: 1 });
-          const scale = 200 / vp.height;
-          const svp   = page.getViewport({ scale });
-
-          // Hi-DPI canvas setup
-          const ratio  = window.devicePixelRatio || 1;
-          const canvas = document.createElement("canvas");
-          const ctx    = canvas.getContext("2d");
-
-          // physical pixel dimensions
-          canvas.width  = svp.width * ratio;
-          canvas.height = svp.height * ratio;
-          // CSS display size
-          canvas.style.width  = `${svp.width}px`;
-          canvas.style.height = `${svp.height}px`;
-          // scale drawing context
-          ctx.scale(ratio, ratio);
-
-          return page.render({ canvasContext: ctx, viewport: svp }).promise
-            .then(() => {
-              const link = document.createElement("a");
-              link.href   = pdfUrl;
-              link.target = "_blank";
-              link.rel    = "noopener";
-              link.appendChild(canvas);
-              card.replaceChild(link, placeholder);
-            });
-        })
-        .catch(err => {
-          console.warn("PDF.js render failed for", fn, err);
-        });
     });
 
     container.appendChild(secEl);
@@ -194,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", e => {
     const card = e.target.closest(".pdf-card");
     if (!card) return;
+    e.preventDefault();
     embedEl.src = card.querySelector("a").href;
     modal.classList.remove("hidden");
   });
