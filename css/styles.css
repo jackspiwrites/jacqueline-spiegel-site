@@ -307,7 +307,7 @@ footer {
 }
 
 /*--------------------------------------
-  Portfolio Grid & Scroll‐Reveal
+  Portfolio Grid & Scroll‑Reveal
 --------------------------------------*/
 #dynamic-portfolio section {
   margin: 3rem 0;
@@ -590,40 +590,9 @@ footer {
     object-fit: cover;
     object-position: center top;
   }
-  .banner-overlay {
-    position: static;
-    background: none;
-    padding: 0;
-    margin-top: -4px;
-  }
-  .hero-text {
-    position: relative;
-    transform: none;
-    bottom: auto;
-    left: auto;
-    margin: 0.5rem 1rem;
-    background: rgba(254,253,252,0.9);
-    padding: 0.75rem;
-    border-radius: 6px;
-    width: calc(100% - 2rem);
-    text-align: left;
-  }
   .hero-text h1 { font-size: 1.8em; }
   .subtitle     { font-size: 1em;   }
   .tagline      { font-size: 0.9em; }
-
-  #main-nav {
-    position: static;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background: rgba(254,253,252,0.9);
-    margin: 0.5rem 0;
-    padding: 0.5rem 0;
-  }
-  #main-nav a {
-    margin: 0.3rem 0.6rem;
-  }
 
   /* Allow nav links to wrap */
   #main-nav,
@@ -661,45 +630,11 @@ footer {
     object-position: center top;
   }
 
-  /* Stack overlay below image */
-  .banner-overlay {
-    position: static;
-    background: none;
-    padding: 0;
-    margin-top: -4px;
-  }
-
-  /* Flow hero-text normally */
-  .hero-text {
-    position: relative;
-    transform: none;
-    bottom: auto;
-    left: auto;
-    margin: 0.5rem 1rem;
-    background: rgba(254,253,252,0.9);
-    padding: 0.75rem;
-    border-radius: 6px;
-    width: calc(100% - 2rem);
-    text-align: left;
-  }
   .hero-text h1 { font-size: 1.8em; }
   .subtitle     { font-size: 1em;   }
   .tagline      { font-size: 0.9em; }
-
-  /* Nav beneath hero-text, wrapping */
-  #main-nav {
-    position: static;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background: rgba(254,253,252,0.9);
-    margin: 0.5rem 0;
-    padding: 0.5rem 0;
-  }
-  #main-nav a {
-    margin: 0.3rem 0.6rem;
-  }
 }
+
 #image-modal {
   display: none;
   position: fixed;
