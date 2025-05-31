@@ -304,6 +304,17 @@
         reviewEnlarge.innerHTML = reviewBoxes[i].innerHTML;
         reviewEnlarge.classList.remove('collapsed', 'expanded');
       }
+
+      // Auto-scroll through reviews
+      const gallery = document.querySelector('.feedback-gallery');
+      let autoIndex = 0;
+      setInterval(() => {
+        autoIndex = (autoIndex + 1) % reviewBoxes.length;
+        gallery.scrollTo({
+          left: reviewBoxes[autoIndex].offsetLeft - gallery.offsetLeft,
+          behavior: 'smooth'
+        });
+      }, 5000);
     });
   </script>
 </body>
