@@ -107,8 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     files.forEach(fn => {
       const pdfUrl   = `assets/pdfs/${encodeURIComponent(fn)}`;
-     const thumbUrl = `assets/thumbs/${encodeURIComponent(
-    fn.replace(/\.pdf$/i, '_page1.png'))}`;
+      const thumbUrl = `assets/thumbs/${encodeURIComponent(
+        fn.replace(/\\.pdf$/i, '_page1.png'))}`;
       const card     = document.createElement('div');
       card.className = 'pdf-card hidden';
 
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(secEl);
   });
 
-  // --- 6) Scroll‐reveal observer ---
+  // --- 6) Scroll‑reveal observer ---
   const obs = new IntersectionObserver((entries, observer) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -158,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   backdrop.addEventListener("click", () => closeBtn.click());
 });
+
 // Simple Image Modal (Lightbox)
 document.addEventListener("DOMContentLoaded", () => {
   const galleryLinks = document.querySelectorAll('.photo-gallery a');
