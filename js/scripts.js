@@ -107,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     files.forEach(fn => {
       const pdfUrl   = `assets/pdfs/${encodeURIComponent(fn)}`;
-      const thumbUrl = `assets/thumbs/${encodeURIComponent(fn.replace(/\\.pdf$/i, '.png'))}`;
+     const thumbUrl = `assets/thumbs/${encodeURIComponent(
+    fn.replace(/\.pdf$/i, '_page1.png'))}`;
       const card     = document.createElement('div');
       card.className = 'pdf-card hidden';
 
