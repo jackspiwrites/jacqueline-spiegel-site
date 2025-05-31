@@ -80,17 +80,17 @@ main {
 }
 .hero-text h1 {
   font-family: var(--font-heading);
-  font-size: 2.5em;
+  font-size: clamp(1.8rem,4.5vw,2.5rem);
   margin-bottom: 0.2em;
 }
 .subtitle {
   font-family: var(--font-heading);
-  font-size: 1.1em;
+  font-size: clamp(1rem,3.5vw,1.1rem);
   color: var(--accent-dark);
   margin-bottom: 0.5em;
 }
 .tagline {
-  font-size: 1em;
+  font-size: clamp(0.9rem,3vw,1rem);
   color: var(--color-text);
 }
 #main-nav {
@@ -342,7 +342,19 @@ footer {
   height: 100%;
   border: none;
 }
-
+.feedback-gallery{display:flex;flex-direction:column;gap:1rem;}
+.review-box{background:#fff;border:2px solid var(--accent-dark);border-radius:6px;padding:1rem;cursor:pointer;}
+.review-box.collapsed{overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;}
+.review-author{font-style:italic;margin-top:0.5rem;}
+#photo-modal,#review-modal{position:fixed;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:5;}
+#photo-modal:not(.hidden),#review-modal:not(.hidden){display:flex;}
+#photo-modal .modal-content,#review-modal .modal-content{position:relative;max-width:90%;max-height:90%;background:#fff;border-radius:8px;overflow:hidden;}
+#photo-modal img{width:100%;height:auto;display:block;}
+.modal-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:#fff;border:none;font-size:2rem;padding:0 0.5rem;cursor:pointer;}
+#photo-prev,#review-prev{left:10px;}
+#photo-next,#review-next{right:10px;}
+#photo-close,#review-close{position:absolute;top:8px;right:12px;font-size:1.5rem;color:#fff;cursor:pointer;z-index:2;}
+.review-box.expanded{}
 /*--------------------------------------
   Photo Gallery & Lightbox (Travels)
 --------------------------------------*/
@@ -371,7 +383,133 @@ footer {
 /*--------------------------------------
   Feedback Gallery & Review Modal (Travels)
 --------------------------------------*/
-/* ... (rest of your travels/review CSS unchanged) ... */
+.feedback-gallery {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+.feedback-gallery::-webkit-scrollbar {
+  height: 8px;
+}
+.feedback-gallery::-webkit-scrollbar-thumb {
+  background: var(--accent-dark);
+  border-radius: 4px;
+}
+.review-box {
+  flex: 0 0 300px;
+  position: relative;
+  background: #fff;
+  border: 2px solid var(--accent-dark);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem 1.5rem;
+  cursor: pointer;
+  overflow: hidden;
+}
+.review-box p,
+.review-box .review-author {
+  position: relative;
+  z-index: 1;
+}
+.review-box::before {
+  content: "“";
+  position: absolute;
+  top: 0.5rem; left: 0.5rem;
+  font-size: 3rem;
+  color: var(--accent);
+  z-index: 0;
+}
+.review-box::after {
+  content: "”";
+  position: absolute;
+  bottom: 1rem; right: 0.5rem;
+  font-size: 3rem;
+  color: var(--accent);
+  z-index: 0;
+}
+.review-author {
+  text-align: right;
+  font-weight: 700;
+  margin-top: 1rem;
+  color: var(--accent-dark);
+}
+/* collapsed state: show only first four lines */
+.review-box.collapsed p:first-of-type {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+}
+.review-box.collapsed p:first-of-type::after {
+  content: "…";
+  position: absolute;
+  bottom: 0; right: 0;
+  background: var(--color-bg);
+  padding-left: 0.2em;
+}
+/* expanded state: show full text */
+.review-box.expanded p:first-of-type {
+  display: block;
+  overflow: visible;
+}
+
+#review-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  z-index: 2000;
+}
+#review-modal:not(.hidden) {
+  display: flex;
+}
+#review-modal .modal-backdrop {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+#review-modal .modal-content {
+  position: relative;
+  width: 90%; max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+#review-close {
+  position: absolute; top: 12px; right: 12px;
+  font-size: 2rem; color: #fff; cursor: pointer; z-index: 3;
+}
+#review-enlarge {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  max-height: 80vh;
+  width: 100%;
+}
+#review-prev,
+#review-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(254,253,252,0.8);
+  border: none;
+  font-size: 2rem;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  z-index: 4;
+}
+#review-prev { left: 10px; }
+#review-next { right: 10px; }
 
 /*--------------------------------------
   Mobile tweaks (≤768px)
@@ -384,6 +522,7 @@ footer {
   }
   .headshot-wrapper {
     margin-bottom: 1.5rem;
+     order:-1;
   }
 
   /* Allow nav links to wrap */
@@ -459,4 +598,35 @@ footer {
   #main-nav a {
     margin: 0.3rem 0.6rem;
   }
+}
+#image-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-image {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+#modal-close {
+  position: absolute;
+  top: 20px; right: 25px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.modal-backdrop {
+  position: absolute;
+  width: 100%; height: 100%;
+  top: 0; left: 0;
 }

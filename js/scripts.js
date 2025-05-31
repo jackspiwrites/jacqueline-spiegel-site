@@ -203,3 +203,38 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   backdrop.addEventListener("click", () => closeBtn.click());
 });
+// Simple Image Modal (Lightbox)
+document.addEventListener("DOMContentLoaded", () => {
+  const galleryLinks = document.querySelectorAll('.photo-gallery a');
+
+  // Create modal elements
+  const modal = document.createElement('div');
+  modal.id = 'image-modal';
+  modal.innerHTML = `
+    <div class="modal-backdrop"></div>
+    <img class="modal-image" src="">
+    <div id="modal-close">&times;</div>
+  `;
+  document.body.appendChild(modal);
+
+  const modalImage = modal.querySelector('.modal-image');
+  const modalClose = modal.querySelector('#modal-close');
+  const modalBackdrop = modal.querySelector('.modal-backdrop');
+
+  // Click event to open modal
+  galleryLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      modalImage.src = link.href;
+      modal.style.display = 'flex';
+    });
+  });
+
+  // Close modal logic
+  const closeModal = () => {
+    modal.style.display = 'none';
+    modalImage.src = '';
+  };
+  modalClose.addEventListener('click', closeModal);
+  modalBackdrop.addEventListener('click', closeModal);
+});
