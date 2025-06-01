@@ -399,9 +399,9 @@ footer {
 .review-author{font-style:italic;margin-top:0.5rem;}
 #photo-modal,#review-modal{position:fixed;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:5;}
 #photo-modal:not(.hidden),#review-modal:not(.hidden){display:flex;}
-#photo-modal .modal-content{position:relative;max-width:90%;max-height:90%;border-radius:8px;overflow:hidden;background:transparent;box-shadow:none;padding:0;}
+#photo-modal .modal-content{position:relative;max-width:90%;max-height:90%;border-radius:8px;background:transparent;box-shadow:none;padding:0;display:flex;align-items:center;justify-content:center;}
 #review-modal .modal-content{position:relative;max-width:90%;max-height:90%;background:#fff;border-radius:8px;overflow:hidden;}
-#photo-modal img{width:100%;height:auto;display:block;}
+#photo-modal img{width:auto;height:auto;object-fit:contain;max-width:100%;max-height:100%;display:block;}
 .modal-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:#fff;border:none;font-size:2rem;padding:0 0.5rem;cursor:pointer;}
 #photo-prev,#review-prev{left:10px;}
 #photo-next,#review-next{right:10px;}
@@ -581,14 +581,14 @@ footer {
 
   /* Taller banner and slight zoom */
   #banner {
-    height: 360px;
+    height: 300px;
   }
   .banner-photo {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center top;
-    transform: scale(1.1);
+    transform: none;
   }
   .hero-text h1 { font-size: 1.8em; }
   .subtitle     { font-size: 1em;   }
@@ -617,10 +617,10 @@ footer {
 --------------------------------------*/
 @media (max-width: 600px) {
   #banner {
-    height: 420px;
+    height: 280px;
   }
   .banner-photo {
-    transform: scale(1.2);
+    transform: none;
   }
 
   .hero-text h1 { font-size: 1.8em; }
@@ -645,8 +645,11 @@ footer {
 }
 
 .modal-image {
-  max-width: 90%;
-  max-height: 90%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  max-width: 90vw;
+  max-height: 90vh;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }

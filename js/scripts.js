@@ -148,7 +148,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", e => {
     const card = e.target.closest(".pdf-card");
     if (!card) return;
+    if (window.matchMedia('(max-width:768px)').matches) {
+      window.open(card.querySelector('a').href, '_blank');
+      return;
+    }
     e.preventDefault();
+     
     embedEl.src = card.querySelector("a").href;
     modal.classList.remove("hidden");
   });
