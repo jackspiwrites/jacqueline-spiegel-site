@@ -128,31 +128,33 @@
       // --------------------
       const photoThumbs = Array.from(document.querySelectorAll('.photo-thumb'));
       const photoModal  = document.getElementById('photo-modal');
-      const photoImg    = document.getElementById('photo-enlarge');
-      let photoIndex    = 0;
+     
+      if (photoModal && photoThumbs.length) {
+        const photoImg = document.getElementById('photo-enlarge');
+        let photoIndex = 0;
 
       function showPhoto(i) {
-        photoIndex = i;
-        photoImg.src = photoThumbs[i].src;
-        photoModal.classList.remove('hidden');
-      }
+          photoIndex = i;
+          photoImg.src = photoThumbs[i].src;
+          photoModal.classList.remove('hidden');
+        }
 
       photoThumbs.forEach((img, i) => {
-        img.onclick = () => showPhoto(i);
-      });
+          img.onclick = () => showPhoto(i);
+        });
 
-      document.getElementById('photo-close').onclick = () =>
-        photoModal.classList.add('hidden');
+       document.getElementById('photo-close').onclick = () =>
+          photoModal.classList.add('hidden');
 
-      document.querySelector('#photo-modal .modal-backdrop').onclick = () =>
-        photoModal.classList.add('hidden');
+         document.querySelector('#photo-modal .modal-backdrop').onclick = () =>
+          photoModal.classList.add('hidden');
 
       document.getElementById('photo-prev').onclick = () =>
-        showPhoto((photoIndex - 1 + photoThumbs.length) % photoThumbs.length);
+          showPhoto((photoIndex - 1 + photoThumbs.length) % photoThumbs.length);
 
-      document.getElementById('photo-next').onclick = () =>
-        showPhoto((photoIndex + 1) % photoThumbs.length);
-
+        document.getElementById('photo-next').onclick = () =>
+          showPhoto((photoIndex + 1) % photoThumbs.length);
+          
       // --------------------
       // Review Lightbox Logic
       // --------------------
