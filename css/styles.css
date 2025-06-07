@@ -434,8 +434,8 @@ footer {
 .feedback-gallery {
   display: grid;
     grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  padding: 1rem 0;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
 }
 .feedback-gallery::-webkit-scrollbar {
   height: 8px;
@@ -445,36 +445,36 @@ footer {
   border-radius: 4px;
 }
 .review-box {
-    position: relative;
+  position: relative;
   background: #fff;
   border: 2px solid var(--accent-dark);
   border-radius: 12px;
   padding: 2.5rem 1.5rem 1.5rem;
   cursor: pointer;
-   max-height: 12rem;
+ box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.review-box.scrollable {
+  max-height: 16rem;
   overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.review-box.scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.review-box.scrollable::-webkit-scrollbar-thumb {
+  background: var(--accent-dark);
+  border-radius: 4px;
 }
 .review-box p,
 .review-box .review-author {
   position: relative;
   z-index: 1;
 }
-.review-box::before {
-  content: "“";
-  position: absolute;
-  top: 0.5rem; left: 0.5rem;
-  font-size: 3rem;
-  color: var(--accent);
-  z-index: 0;
-}
-.review-box::after {
-  content: "”";
-  position: absolute;
-  bottom: 1rem; right: 0.5rem;
-  font-size: 3rem;
-  color: var(--accent);
-  z-index: 0;
-}
+
 .review-author {
   text-align: right;
   font-weight: 700;
