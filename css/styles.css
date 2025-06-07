@@ -433,7 +433,7 @@ footer {
 }
 
 /*--------------------------------------
-  Feedback Gallery & Review Modal (Travels)
+  Feedback Gallery & Review Modal (Feedback)
 --------------------------------------*/
 .feedback-gallery {
   display: flex;
@@ -488,18 +488,12 @@ footer {
 /* collapsed state: show only first four lines */
 .review-box.collapsed p:first-of-type {
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
   position: relative;
 }
-.review-box.collapsed p:first-of-type::after {
-  content: "…";
-  position: absolute;
-  bottom: 0; right: 0;
-  background: var(--color-bg);
-  padding-left: 0.2em;
-}
+
 /* expanded state: show full text */
 .review-box.expanded p:first-of-type {
   display: block;
