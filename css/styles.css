@@ -393,10 +393,6 @@ footer {
   height: 100%;
   border: none;
 }
-.feedback-gallery{display:flex;flex-direction:row;overflow-x:auto;gap:1rem;padding:1rem 0;}
-.review-box{background:#fff;border:2px solid var(--accent-dark);border-radius:6px;padding:1rem;cursor:pointer;}
-.review-box.collapsed{overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;}
-.review-author{font-style:italic;margin-top:0.5rem;}
 #photo-modal,#review-modal{position:fixed;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:5;}
 #photo-modal:not(.hidden),#review-modal:not(.hidden){display:flex;}
 #photo-modal .modal-content{position:relative;max-width:90%;max-height:90%;border-radius:8px;background:transparent;box-shadow:none;padding:0;display:flex;align-items:center;justify-content:center;}
@@ -436,8 +432,8 @@ footer {
   Feedback Gallery & Review Modal (Feedback)
 --------------------------------------*/
 .feedback-gallery {
-  display: flex;
-  overflow-x: auto;
+  display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
   padding: 1rem 0;
 }
@@ -449,14 +445,14 @@ footer {
   border-radius: 4px;
 }
 .review-box {
-  flex: 0 0 300px;
-  position: relative;
+    position: relative;
   background: #fff;
   border: 2px solid var(--accent-dark);
   border-radius: 12px;
   padding: 2.5rem 1.5rem 1.5rem;
   cursor: pointer;
-  overflow: hidden;
+   max-height: 220px;
+  overflow-y: auto;
 }
 .review-box p,
 .review-box .review-author {
@@ -485,15 +481,6 @@ footer {
   margin-top: 1rem;
   color: var(--accent-dark);
 }
-/* collapsed state: show only first four lines */
-.review-box.collapsed p:first-of-type {
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  position: relative;
-}
-
 /* expanded state: show full text */
 .review-box.expanded p:first-of-type {
   display: block;
