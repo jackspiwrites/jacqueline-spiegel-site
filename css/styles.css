@@ -433,7 +433,7 @@ footer {
 --------------------------------------*/
 .feedback-gallery {
   display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   padding: 1rem 0;
 }
@@ -451,7 +451,7 @@ footer {
   border-radius: 12px;
   padding: 2.5rem 1.5rem 1.5rem;
   cursor: pointer;
-   max-height: 220px;
+   max-height: 12rem;
   overflow-y: auto;
 }
 .review-box p,
@@ -583,6 +583,11 @@ footer {
 
   /* One-column portfolio */
   .portfolio-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+   /* Single-column feedback gallery */
+  .feedback-gallery {
     grid-template-columns: 1fr !important;
   }
 
