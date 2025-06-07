@@ -456,9 +456,9 @@ footer {
 }
 
 .review-box.scrollable {
-  max-height: 16rem;
+  max-height: 17rem;
   overflow-y: auto;
-  scrollbar-width: thin;
+  scrollbar-width: auto;
 }
 
 .review-box.scrollable::-webkit-scrollbar {
